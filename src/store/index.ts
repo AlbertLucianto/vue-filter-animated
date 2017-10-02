@@ -10,9 +10,7 @@ Vue.use(Vuex);
 const state: StateInterface = {
   loading: false,
   currentSearchCategory: null,
-  nodes: {
-
-  },
+  nodes: [],
 };
 
 export default new Vuex.Store({

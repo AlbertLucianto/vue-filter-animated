@@ -1,10 +1,15 @@
 <template>
   <div class="navbar">
     <input @keyup="debounceSearch" v-model="searchText">
-    <div v-for="(item, index) in nodes" :key="index" class="node bounceIn animated">
-      {{ item.title }}<br>
-      {{ item.category }}
-    </div>
+    <transition-group
+      enter-active-class="animated bounceIn"
+      leave-active-class="animated bounceOut"
+    >
+      <div v-for="(item, index) in nodes" :key="item.title" class="node">
+        {{ item.title }}<br>
+        {{ item.category }}
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -39,7 +44,7 @@ export default {
     },
     debounceSearch: debounce(function () {
       this.getSearchResult();
-    }, 200),
+    }, 400),
   },
   components: {
     'search-bar': SearchBar,

@@ -7,16 +7,23 @@ export const changeSearchCategory = ({ commit }, category: string) => {
   commit(types.CHANGE_SEARCH_CATEGORY, category);
 };
 
-export const getSearchResult = ({ commit }, param: SearchParamInterface) => {
+export const getSearchResult = ({ commit, state }, param: SearchParamInterface) => {
   commit(types.GET_SEARCH_RESULT);
   api.getSearchResult(param)
   .then((results: ResultsInterface) => {
-    const shownResult = [];
-    commit(types.RECEIVE_SEARCH_RESULT, shownResult);
-    const source = Observable.interval(200).take(results.data.length);
+    const newResult = [];
+    const existingResult = results.data.filter(val => {
+      if(state.nodes.map(node => node.title.toLowerCase()).includes(val.title.toLowerCase())) return true;
+      else {
+        newResult.push(val);
+        return false;
+      }
+    });
+    commit(types.RECEIVE_SEARCH_RESULT, existingResult);
+    const source = Observable.interval(200).take(newResult.length);
     source.subscribe(idx => {
-      shownResult.push(results.data[idx]);
-      commit(types.RECEIVE_SEARCH_RESULT, shownResult);
+      existingResult.push(newResult[idx]);
+      commit(types.RECEIVE_SEARCH_RESULT, existingResult);
     });
   });
 };

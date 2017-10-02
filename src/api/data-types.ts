@@ -3,7 +3,12 @@ export interface SearchParamInterface {
   text: string;
 }
 
+export interface NodeInterface {
+  title: string;
+  category: string;
+}
+
 export interface ResultsInterface {
-  data: Array<Object>;
+  data: Array<NodeInterface>;
   status: number;
 }
