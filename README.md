@@ -1,6 +1,6 @@
 # Filter Animated Using VueJS
 
-### [Demo](https://albertlucianto.github.io)
+### [Demo](https://albertlucianto.github.io/vue-filter-animated)
 
 ### Setup
 ```bash
